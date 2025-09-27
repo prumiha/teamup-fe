@@ -3,7 +3,7 @@ import './App.css';
 import {AlertProvider} from "./providers/AlertProvider";
 import Test from "./Test";
 import {StyleProvider} from "./providers/StyleProvider";
-import {BrowserRouter, Routes} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {SecureRoute} from "./components/SecureRoute";
 import {Role} from "./hooks/useAuth";
 
@@ -15,10 +15,12 @@ const App = () => {
                 <BrowserRouter>
                     <Routes>
                         {/* Public routes */}
-                        {SecureRoute("/", <Test/>)}
+                        <Route path="/" element={<Test/>} />
 
                         {/* Protected routes */}
-                        {SecureRoute("/profile", <Test/>, Role.USER)}
+                        <Route path="/profile" element={
+                            <SecureRoute children={<Test/>} requiredRole={Role.USER} />
+                        } />
                     </Routes>
                 </BrowserRouter>
             </AlertProvider>
