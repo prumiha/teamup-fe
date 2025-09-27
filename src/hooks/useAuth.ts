@@ -1,15 +1,22 @@
 import {useState} from "react";
 import useLocalStorage, {LOCAL_STORAGE_TOKEN_KEY, LOCAL_STORAGE_USER_KEY, UseLocalStorage} from "./useLocalStorage";
 
+export enum Role {
+    USER = 'USER',
+    ADMIN = 'ADMIN',
+    GUEST = 'GUEST'
+}
 
 interface User {
     id: number;
     username: string;
+    role: Role;
 }
 
 interface StorageUser {
     id: number;
     username: string;
+    role: Role;
 }
 
 export interface UseAuth {
@@ -20,9 +27,11 @@ export interface UseAuth {
 }
 
 export const DEFAULT_GUEST_USERNAME = "Guest";
+export const DEFAULT_GUEST_ROLE = Role.GUEST;
 const DEFAULT_GUEST_USER: User = {
     id: 0,
     username: DEFAULT_GUEST_USERNAME,
+    role: DEFAULT_GUEST_ROLE,
 };
 
 const isUserLoadedSuccessfully = (storageUser: StorageUser | null): storageUser is StorageUser => {
@@ -32,12 +41,21 @@ const isUserLoadedSuccessfully = (storageUser: StorageUser | null): storageUser 
 
     const id = storageUser.id;
     const username = storageUser.username;
+    const role = storageUser.role;
 
     if (id == null || id <= 0) {
         return false;
     }
 
     if (username == null || username.length <= 0 || username.length > 30) {
+        return false;
+    }
+
+    if (role == null || role.length <= 0) {
+        return false;
+    }
+
+    if (!Object.values(Role).includes(role as Role)){
         return false;
     }
 
@@ -50,6 +68,7 @@ const loadUserFromLocalStorageOrReturnGuest = (localStorage: UseLocalStorage) =>
         return {
             id: storageUser.id,
             username: storageUser.username,
+            role: storageUser.role,
         };
     } else {
         return DEFAULT_GUEST_USER;
