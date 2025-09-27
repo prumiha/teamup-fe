@@ -1,6 +1,6 @@
 import {useState} from "react";
 import useLocalStorage, {LOCAL_STORAGE_SETTINGS_KEY} from "./useLocalStorage";
-import {Theme} from "../provider/StyleProvider";
+import {Theme} from "../providers/StyleProvider";
 
 
 export enum Language {

@@ -6,7 +6,7 @@ import ContentPaste from '@mui/icons-material/ContentPaste';
 import Cloud from '@mui/icons-material/Cloud';
 import {AlertType, useAlert} from "./hooks/useAlert";
 import useSettings from "./hooks/useSettings";
-import {Theme} from "./provider/StyleProvider";
+import {Theme} from "./providers/StyleProvider";
 
 const Test = () => {
     const alert = useAlert();

@@ -19,9 +19,10 @@ export interface UseAuth {
     logout: () => void;
 }
 
-const GUEST_USER: User = {
+export const DEFAULT_GUEST_USERNAME = "Guest";
+const DEFAULT_GUEST_USER: User = {
     id: 0,
-    username: "Guest",
+    username: DEFAULT_GUEST_USERNAME,
 };
 
 const isUserLoadedSuccessfully = (storageUser: StorageUser | null): storageUser is StorageUser => {
@@ -51,7 +52,7 @@ const loadUserFromLocalStorageOrReturnGuest = (localStorage: UseLocalStorage) =>
             username: storageUser.username,
         };
     } else {
-        return GUEST_USER;
+        return DEFAULT_GUEST_USER;
     }
 }
 
@@ -74,7 +75,7 @@ const useAuth = (): UseAuth => {
     };
 
     const logout = () => {
-        setUserState(GUEST_USER);
+        setUserState(DEFAULT_GUEST_USER);
         setTokenState(null);
         localStorage.remove(LOCAL_STORAGE_USER_KEY);
         localStorage.remove(LOCAL_STORAGE_TOKEN_KEY);

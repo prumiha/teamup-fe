@@ -1,5 +1,5 @@
 import {useContext} from "react";
-import {AlertContext, AlertContextType} from "../provider/AlertProvider";
+import {AlertContext, AlertContextType} from "../providers/AlertProvider";
 
 export enum AlertType {
     SUCCESS = "success",
