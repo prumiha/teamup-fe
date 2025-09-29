@@ -29,8 +29,8 @@ export const AlertProvider = ({ children }: { children: ReactNode }) => {
     return (
         <AlertContext.Provider value={{ showAlert }}>
             {children}
-            <Snackbar open={open} autoHideDuration={duration} onClose={handleClose} sx={{ width: '100%', margin: '0 auto'  }} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
-                <Alert elevation={6} variant="standard" onClose={handleClose} severity={severity} sx={{ width: '80%', margin: '0 auto' }}>
+            <Snackbar open={open} autoHideDuration={duration} onClose={handleClose} sx={{ width: '100%' }} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+                <Alert elevation={10} variant="standard" onClose={handleClose} severity={severity} sx={{ width: '80%'}}>
                     {message}
                 </Alert>
             </Snackbar>
