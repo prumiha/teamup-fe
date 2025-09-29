@@ -1,12 +1,8 @@
 import {useState} from "react";
 import useLocalStorage, {LOCAL_STORAGE_SETTINGS_KEY} from "./useLocalStorage";
 import {Theme} from "../providers/StyleProvider";
+import {Language} from "../providers/LanguageProvider";
 
-
-export enum Language {
-    ENGLISH = "english",
-    CROATIAN = "croatian",
-}
 
 export interface Settings {
     theme: Theme;
