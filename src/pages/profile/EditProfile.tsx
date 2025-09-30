@@ -11,16 +11,14 @@ import {
     IconButton,
     LinearProgress,
     Stack,
-    TextField
 } from "@mui/material";
 import {Close as CloseIcon, Delete as DeleteIcon, Save as SaveIcon, Upload as UploadIcon} from "@mui/icons-material";
 import {useTranslation} from "react-i18next";
-
-// Validation patterns
-const EMAIL_PATTERN = /^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$/;
-const PHONE_PATTERN = /^[0-9+\- ]+$/;
-const USERNAME_PATTERN = /^[a-zA-Z0-9._-]+$/;
-const FULL_NAME_PATTERN = /^[a-zA-Z0-9._\- ]+$/;
+import UsernameField from "../../components/profile/fields/UsernameField";
+import FullNameField from "../../components/profile/fields/FullNameField";
+import EmailField from "../../components/profile/fields/EmailField";
+import PhoneField from "../../components/profile/fields/PhoneField";
+import BioField from "../../components/profile/fields/BioField";
 
 export type EditProfileValues = {
     username: string;
@@ -66,7 +64,11 @@ export const EditProfile: React.FC<EditProfileProps> = ({
     const [bio, setBio] = useState<string>(initialValues?.bio ?? (DEFAULT_VALUES.bio ?? ""));
     const [avatarFile, setAvatarFile] = useState<File | null>(initialValues?.avatarFile ?? DEFAULT_VALUES.avatarFile ?? null);
 
-    const [errors, setErrors] = useState<Record<keyof EditProfileValues, string | undefined>>({} as any);
+    const [validUsername, setValidUsername] = useState<boolean>(false);
+    const [validFullName, setValidFullName] = useState<boolean>(true);
+    const [validEmail, setValidEmail] = useState<boolean>(true);
+    const [validPhone, setValidPhone] = useState<boolean>(true);
+    const [validBio, setValidBio] = useState<boolean>(true);
     const [avatarPreview, setAvatarPreview] = useState<string | null>(initialValues?.avatarUrl ?? null);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -78,88 +80,9 @@ export const EditProfile: React.FC<EditProfileProps> = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const bioCount = bio?.length ?? 0;
-
-    const buildDraft = (overrides: Partial<EditProfileValues> = {}): EditProfileValues => ({
-        username,
-        fullName,
-        email,
-        phone,
-        bio,
-        avatarFile,
-        avatarUrl: avatarPreview,
-        ...overrides,
-    });
-
-    const validate = (overrides: Partial<EditProfileValues> = {}) => {
-        const draft = buildDraft(overrides);
-        const e: Record<keyof EditProfileValues, string | undefined> = {} as any;
-
-        // username: required, 3-20 chars, allowed pattern
-        const u = draft.username?.trim() ?? "";
-        if (!u) e.username = t("Username is required");
-        else if (u.length < 3 || u.length > 20) e.username = t("Username must be 3-20 characters");
-        else if (!USERNAME_PATTERN.test(u)) e.username = t("Username can include letters, numbers, dot, underscore, and hyphen only");
-
-        // full name: max 50, allowed pattern (letters, numbers, dot, underscore, hyphen, space)
-        const fn = draft.fullName?.trim() ?? "";
-        if (fn) {
-            if (fn.length > 50) e.fullName = t("Full name must be at most 50 characters");
-            else if (!FULL_NAME_PATTERN.test(fn)) e.fullName = t("Full name contains invalid characters");
-        }
-
-        // email: optional, max 40, pattern
-        const em = (draft.email ?? "").trim();
-        if (em) {
-            if (em.length > 40) e.email = t("Email must be at most 40 characters");
-            else if (!EMAIL_PATTERN.test(em)) e.email = t("Enter a valid email");
-        }
-
-        // phone: optional, max 20, pattern
-        const ph = (draft.phone ?? "").trim();
-        if (ph) {
-            if (ph.length > 20) e.phone = t("Phone must be at most 20 characters");
-            else if (!PHONE_PATTERN.test(ph)) e.phone = t("Phone can contain digits, +, -, and spaces only");
-        }
-
-        // bio: optional, max 500
-        const b = (draft.bio ?? "");
-        if (b && b.length > 500) e.bio = t("Bio must be at most 500 characters");
-
-        setErrors(e);
-        return e;
-    };
-
-    // Run initial validation to populate errors state
-    useEffect(() => {
-        validate();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const isValid = useMemo(() => Object.values(errors).every((v) => !v), [errors]);
-
-    const handleChange = (field: keyof Pick<EditProfileValues, 'username' | 'fullName' | 'email' | 'phone' | 'bio'>) =>
-        (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-            const value = event.target.value;
-            switch (field) {
-                case 'username':
-                    setUsername(value);
-                    break;
-                case 'fullName':
-                    setFullName(value);
-                    break;
-                case 'email':
-                    setEmail(value);
-                    break;
-                case 'phone':
-                    setPhone(value);
-                    break;
-                case 'bio':
-                    setBio(value);
-                    break;
-            }
-            validate({[field]: value} as Partial<EditProfileValues>);
-        };
+    const isValid = useMemo(() => (
+        validUsername && validFullName && validEmail && validPhone && validBio
+    ), [validUsername, validFullName, validEmail, validPhone, validBio]);
 
     const handleAvatarPick = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -179,8 +102,8 @@ export const EditProfile: React.FC<EditProfileProps> = ({
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const eMap = validate();
-        if (Object.values(eMap).some(Boolean)) return;
+        // const eMap = validate();
+        // if (Object.values(eMap).some(Boolean)) return;
         const payload: EditProfileValues = {
             username: username.trim(),
             fullName: fullName?.trim() || "",
@@ -233,61 +156,35 @@ export const EditProfile: React.FC<EditProfileProps> = ({
 
                     <Grid size={{ xs: 12, sm: 8 }}>
                         <Stack spacing={2}>
-                            <TextField
-                                label={t("Username")}
+                            <UsernameField
                                 value={username}
-                                onChange={handleChange('username')}
-                                error={!!errors.username}
-                                helperText={errors.username}
-                                inputProps={{maxLength: 20}}
-                                required
-                                fullWidth
+                                onChange={setUsername}
+                                onValidChange={setValidUsername}
+                                autoFocus
                             />
-
-                            <TextField
-                                label={t("Full name")}
-                                value={fullName}
-                                onChange={handleChange('fullName')}
-                                error={!!errors.fullName}
-                                helperText={errors.fullName }
-                                inputProps={{maxLength: 50}}
-                                fullWidth
+                            <FullNameField
+                                value={fullName ?? ""}
+                                onChange={setFullName}
+                                onValidChange={setValidFullName}
                             />
-
-                            <TextField
-                                label={t("Email")}
-                                type="email"
+                            <EmailField
                                 value={email ?? ""}
-                                onChange={handleChange('email')}
-                                error={!!errors.email}
-                                helperText={errors.email}
-                                inputProps={{maxLength: 40}}
-                                fullWidth
+                                onChange={setEmail}
+                                onValidChange={setValidEmail}
                             />
-
-                            <TextField
-                                label={t("Phone")}
+                            <PhoneField
                                 value={phone ?? ""}
-                                onChange={handleChange('phone')}
-                                error={!!errors.phone}
-                                helperText={errors.phone}
-                                inputProps={{maxLength: 20}}
-                                fullWidth
+                                onChange={setPhone}
+                                onValidChange={setValidPhone}
                             />
                         </Stack>
                     </Grid>
 
                     <Grid size={{ xs: 12 }}>
-                        <TextField
-                            label={t("Bio")}
-                            value={bio ?? ""}
-                            onChange={handleChange('bio')}
-                            error={!!errors.bio}
-                            helperText={errors.bio || `${bioCount}/500`}
-                            inputProps={{maxLength: 500}}
-                            multiline
-                            minRows={4}
-                            fullWidth
+                        <BioField
+                            value = {bio ?? ""}
+                            onChange = {setBio}
+                            onValidChange = {setValidBio}
                         />
                     </Grid>
                 </Grid>
