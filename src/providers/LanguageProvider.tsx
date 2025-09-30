@@ -35,6 +35,7 @@ i18n.use(initReactI18next).init({
                 // Alerts / SecureRoute
                 "Sign in to access this page": "Sign in to access this page",
                 "You are trying to access a page you should not be accessing": "You are trying to access a page you should not be accessing",
+                "You are not allowed to visit this site": "You are not allowed to visit this site",
                 // Test/demo page
                 "Light Theme": "Light Theme",
                 "Dark Theme": "Dark Theme",
@@ -59,6 +60,7 @@ i18n.use(initReactI18next).init({
                 // Alerts / SecureRoute
                 "Sign in to access this page": "Prijavite se za pristup ovoj stranici",
                 "You are trying to access a page you should not be accessing": "Pokušavate pristupiti stranici za koju nemate prava pristupa",
+                "You are not allowed to visit this site": "Niste ovlašteni za pristup ovoj stranici",
                 // Test/demo page
                 "Light Theme": "Svijetla tema",
                 "Dark Theme": "Tamna tema",

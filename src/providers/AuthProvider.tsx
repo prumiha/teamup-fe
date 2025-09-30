@@ -24,15 +24,15 @@ export enum Role {
 export interface User {
     id: number;
     username: string;
-    role: Role;
+    roles: Role[];
 }
 
 export const DEFAULT_GUEST_USERNAME = "Guest";
-export const DEFAULT_GUEST_ROLE = Role.GUEST;
+export const DEFAULT_GUEST_ROLES = [Role.GUEST];
 const DEFAULT_GUEST_USER: User = {
     id: 0,
     username: DEFAULT_GUEST_USERNAME,
-    role: DEFAULT_GUEST_ROLE,
+    roles: DEFAULT_GUEST_ROLES,
 };
 
 const isUserLoadedSuccessfully = (u: User | null): u is User => {
@@ -42,7 +42,7 @@ const isUserLoadedSuccessfully = (u: User | null): u is User => {
 
     const id = u.id;
     const username = u.username;
-    const role = u.role;
+    const roles = u.roles;
 
     if (id == null || id <= 0) {
         return false;
@@ -52,11 +52,11 @@ const isUserLoadedSuccessfully = (u: User | null): u is User => {
         return false;
     }
 
-    if (role == null || role.length <= 0) {
+    if (roles == null || roles.length <= 0) {
         return false;
     }
 
-    if (!Object.values(Role).includes(role as Role)){
+    if (!roles.every(role => Object.values(Role).includes(role as Role))) {
         return false;
     }
 
@@ -69,7 +69,7 @@ const loadUserFromLocalStorageOrReturnGuest = (localStorage: UseLocalStorage) =>
         return {
             id: storageUser.id,
             username: storageUser.username,
-            role: storageUser.role,
+            roles: storageUser.roles,
         };
     } else {
         return DEFAULT_GUEST_USER;

@@ -1,13 +1,12 @@
-import React from "react";
-import {Box, Button, Typography} from "@mui/material";
+import {useTranslation} from "react-i18next";
 import {useStyle} from "../../providers/StyleProvider";
 import {useLanguage} from "../../providers/LanguageProvider";
-import {useTranslation} from "react-i18next";
-import {LanguageSelector} from "./LanguageSelector";
-import {ThemeSelector} from "./ThemeSelector";
+import {Box, Button, Typography} from "@mui/material";
+import {ThemeSelector} from "../settings/ThemeSelector";
+import {LanguageSelector} from "../settings/LanguageSelector";
+import React from "react";
 
-
-export const SettingsPage = () => {
+export const ProfilePage = () => {
     const {t} = useTranslation();
     const { resetTheme } = useStyle();
     const { resetLanguage } = useLanguage();

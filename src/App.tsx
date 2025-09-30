@@ -8,6 +8,7 @@ import {Navigation, NavigationPaths} from "./pages/navigation/Navigation";
 import {LanguageProvider} from "./providers/LanguageProvider";
 import {AuthProvider, Role} from "./providers/AuthProvider";
 import {ApiProvider} from "./pages/settings/ApiProvider";
+import {ProfilePage} from "./pages/profile/ProfilePage";
 
 
 const App = () => {
@@ -26,7 +27,7 @@ const App = () => {
 
                                     {/* Protected routes */}
                                     <Route path="/profile" element={
-                                        <SecureRoute children={<SettingsPage/>} requiredRole={Role.USER}/>
+                                        <SecureRoute children={<ProfilePage/>} requiredRoles={[Role.USER]}/>
                                     }/>
                                 </Routes>
                             </BrowserRouter>
