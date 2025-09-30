@@ -1,6 +1,5 @@
 import React from 'react';
 import {AlertProvider} from "./providers/AlertProvider";
-import Test from "./Test";
 import {StyleProvider} from "./providers/StyleProvider";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {SecureRoute} from "./components/SecureRoute";
@@ -22,12 +21,12 @@ const App = () => {
                                 <Navigation/>
                                 <Routes>
                                     {/* Public routes */}
-                                    <Route path={NavigationPaths.HOME} element={<Test/>}/>
+                                    <Route path={NavigationPaths.HOME} element={<SettingsPage/>}/>
                                     <Route path={NavigationPaths.SETTINGS} element={<SettingsPage/>}/>
 
                                     {/* Protected routes */}
                                     <Route path="/profile" element={
-                                        <SecureRoute children={<Test/>} requiredRole={Role.USER}/>
+                                        <SecureRoute children={<SettingsPage/>} requiredRole={Role.USER}/>
                                     }/>
                                 </Routes>
                             </BrowserRouter>

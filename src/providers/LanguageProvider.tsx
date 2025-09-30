@@ -3,12 +3,7 @@ import useLocalStorage, {LOCAL_STORAGE_LANGUAGE_KEY} from "../hooks/useLocalStor
 import i18n from "i18next";
 import {initReactI18next} from "react-i18next";
 import {Box} from "@mui/material";
-import {DEFAULT_SETTINGS} from "../hooks/useSettings";
-
-export enum Language {
-    ENGLISH = "english",
-    CROATIAN = "croatian",
-}
+import {DEFAULT_SETTINGS, Language} from "../hooks/useSettings";
 
 const DEFAULT_LANGUAGE = Language.ENGLISH;
 

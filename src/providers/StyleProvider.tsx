@@ -1,12 +1,7 @@
 import React, {createContext, ReactNode, useContext, useMemo, useState} from "react";
 import {Box, createTheme, PaletteMode, ThemeProvider} from "@mui/material";
 import useLocalStorage, {LOCAL_STORAGE_THEME_KEY} from "../hooks/useLocalStorage";
-import {DEFAULT_SETTINGS} from "../hooks/useSettings";
-
-export enum Theme {
-    LIGHT = "light",
-    DARK = "dark",
-}
+import {DEFAULT_SETTINGS, Theme} from "../hooks/useSettings";
 
 interface ThemeContextType {
     activeTheme: Theme;

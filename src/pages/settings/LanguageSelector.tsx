@@ -1,8 +1,8 @@
 import {useTranslation} from "react-i18next";
 import React from "react";
 import {FormControl, InputLabel, ListItemIcon, ListItemText, MenuItem, Select, SelectChangeEvent} from "@mui/material";
-import {Language, useLanguage} from "../../providers/LanguageProvider";
-
+import {useLanguage} from "../../providers/LanguageProvider";
+import {Language} from "../../hooks/useSettings";
 
 export const LanguageSelector = () => {
     const {t} = useTranslation();

@@ -1,7 +1,8 @@
 import React from "react";
 import {FormControl, InputLabel, ListItemIcon, ListItemText, MenuItem, Select, SelectChangeEvent} from "@mui/material";
 import {Brightness4, Brightness7} from "@mui/icons-material";
-import {Theme, useStyle} from "../../providers/StyleProvider";
+import {useStyle} from "../../providers/StyleProvider";
+import {Theme} from "../../hooks/useSettings";
 import {useTranslation} from "react-i18next";
 
 export const ThemeSelector = () => {
