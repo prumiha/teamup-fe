@@ -37,6 +37,9 @@ i18n.use(initReactI18next).init({
                 "English": "English",
                 "Croatian": "Croatian",
                 "Reset to Defaults": "Reset to Defaults",
+                // Alerts / SecureRoute
+                "Sign in to access this page": "Sign in to access this page",
+                "You are trying to access a page you should not be accessing": "You are trying to access a page you should not be accessing",
                 // Test/demo page
                 "Light Theme": "Light Theme",
                 "Dark Theme": "Dark Theme",
@@ -58,6 +61,9 @@ i18n.use(initReactI18next).init({
                 "English": "Engleski",
                 "Croatian": "Hrvatski",
                 "Reset to Defaults": "Vrati na zadano",
+                // Alerts / SecureRoute
+                "Sign in to access this page": "Prijavite se za pristup ovoj stranici",
+                "You are trying to access a page you should not be accessing": "Pokušavate pristupiti stranici za koju nemate prava pristupa",
                 // Test/demo page
                 "Light Theme": "Svijetla tema",
                 "Dark Theme": "Tamna tema",

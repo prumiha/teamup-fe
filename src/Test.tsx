@@ -4,7 +4,7 @@ import ContentCut from '@mui/icons-material/ContentCut';
 import ContentCopy from '@mui/icons-material/ContentCopy';
 import ContentPaste from '@mui/icons-material/ContentPaste';
 import Cloud from '@mui/icons-material/Cloud';
-import {AlertType, useAlert} from "./hooks/useAlert";
+import {AlertType, useAlert} from "./providers/AlertProvider";
 import useSettings from "./hooks/useSettings";
 import {Theme} from "./providers/StyleProvider";
 import { useTranslation } from 'react-i18next';

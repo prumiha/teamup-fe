@@ -5,7 +5,8 @@ export interface UseLocalStorage {
     clearAll: () => void;
 }
 
-export const LOCAL_STORAGE_TOKEN_KEY = "teamup_auth_token";
+export const LOCAL_STORAGE_TOKEN_KEY = "teamup_auth_token"
+export const LOCAL_STORAGE_TOKEN_EXPIRATION_KEY = "teamup_auth_token_expiration";
 export const LOCAL_STORAGE_USER_KEY = "teamup_user";
 export const LOCAL_STORAGE_SETTINGS_KEY = "teamup_settings";
 export const LOCAL_STORAGE_THEME_KEY = "teamup_theme";

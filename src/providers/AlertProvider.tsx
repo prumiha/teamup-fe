@@ -1,9 +1,18 @@
-import React, { createContext } from "react";
+import React, {createContext, ReactNode, useContext, useState} from "react";
 import {Alert, AlertColor, Snackbar} from "@mui/material";
-import {ReactNode, useState} from "react";
+
+export enum AlertType {
+    SUCCESS = "success",
+    ERROR = "error",
+    INFO = "info",
+    WARNING = "warning",
+}
+
+export const DEFAULT_ALERT_DURATION = 3000;
+export const DEFAULT_ALERT_TYPE = AlertType.INFO;
 
 export interface AlertContextType {
-    showAlert: (message: string, sev: AlertColor, duration: number) => void;
+    showAlert: (message: string, type?: AlertType, duration?: number) => void;
 }
 
 export const AlertContext = createContext<AlertContextType | undefined>(undefined);
@@ -11,12 +20,16 @@ export const AlertContext = createContext<AlertContextType | undefined>(undefine
 export const AlertProvider = ({ children }: { children: ReactNode }) => {
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState("");
-    const [severity, setSeverity] = useState<AlertColor>("info");
-    const [duration, setDuration] = useState<number>(4000);
+    const [severity, setSeverity] = useState<AlertType>(DEFAULT_ALERT_TYPE);
+    const [duration, setDuration] = useState<number>(DEFAULT_ALERT_DURATION);
 
-    const showAlert = (message: string, sev: AlertColor, duration: number) => {
+    const showAlert = (
+        message: string,
+        type: AlertType = DEFAULT_ALERT_TYPE,
+        duration: number = DEFAULT_ALERT_DURATION
+    ) => {
         setMessage(message);
-        setSeverity(sev);
+        setSeverity(type);
         setDuration(duration);
         setOpen(true);
     };
@@ -29,11 +42,29 @@ export const AlertProvider = ({ children }: { children: ReactNode }) => {
     return (
         <AlertContext.Provider value={{ showAlert }}>
             {children}
-            <Snackbar open={open} autoHideDuration={duration} onClose={handleClose} sx={{ width: '100%' }} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
-                <Alert elevation={10} variant="standard" onClose={handleClose} severity={severity} sx={{ width: '80%'}}>
+            <Snackbar
+                open={open}
+                autoHideDuration={duration}
+                onClose={handleClose}
+                sx={{ width: "100%" }}
+                anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            >
+                <Alert
+                    elevation={10}
+                    variant="standard"
+                    onClose={handleClose}
+                    severity={severity as AlertColor}
+                    sx={{ width: "80%" }}
+                >
                     {message}
                 </Alert>
             </Snackbar>
         </AlertContext.Provider>
     );
+};
+
+export const useAlert = (): AlertContextType => {
+    const context = useContext<AlertContextType | undefined>(AlertContext);
+    if (!context) throw new Error("useAlert must be used within AlertProvider");
+    return context;
 };

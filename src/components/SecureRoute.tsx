@@ -1,8 +1,9 @@
 import {Navigate} from 'react-router-dom';
 
-import useAuth, {DEFAULT_GUEST_ROLE, Role} from "../hooks/useAuth";
 import React, {ReactNode} from "react";
-import {AlertType, useAlert} from "../hooks/useAlert";
+import {AlertType, useAlert} from "../providers/AlertProvider";
+import {DEFAULT_GUEST_ROLE, Role, useAuth} from "../providers/AuthProvider";
+import {useTranslation} from "react-i18next";
 
 type SecureRouteProps = {
     children: ReactNode;
@@ -12,6 +13,7 @@ type SecureRouteProps = {
 export const SecureRoute: React.FC<SecureRouteProps> = ({children, requiredRole = Role.GUEST}: SecureRouteProps) => {
     const auth = useAuth();
     const alert = useAlert();
+    const { t } = useTranslation();
     const userRole = auth.user.role;
 
     if (requiredRole === Role.GUEST) {
@@ -19,13 +21,13 @@ export const SecureRoute: React.FC<SecureRouteProps> = ({children, requiredRole 
     }
 
     if (userRole === DEFAULT_GUEST_ROLE) {
-        alert.showAlert("Sign in to access this page", AlertType.WARNING, 4000);
+        alert.showAlert(t("Sign in to access this page"), AlertType.WARNING, 4000);
         return <Navigate to="/login" replace/>;
     }
 
     if (requiredRole === Role.ADMIN && userRole !== Role.ADMIN) {
         alert.showAlert(
-            "You are trying to access a page you should not be accessing",
+            t("You are trying to access a page you should not be accessing"),
             AlertType.ERROR,
             4000
         );

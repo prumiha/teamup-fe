@@ -15,6 +15,7 @@
     "@types/node": "^16.18.126",
     "@types/react": "^19.1.14",
     "@types/react-dom": "^19.1.9",
+    "axios": "^1.7.9",
     "i18next": "^21.8.16",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
