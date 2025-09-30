@@ -22,7 +22,7 @@ const App = () => {
                                 <Navigation/>
                                 <Routes>
                                     {/* Public routes */}
-                                    <Route path={NavigationPaths.HOME} element={<SettingsPage/>}/>
+                                    <Route path={NavigationPaths.HOME} element={<ProfilePage/>}/>
                                     <Route path={NavigationPaths.SETTINGS} element={<SettingsPage/>}/>
 
                                     {/* Protected routes */}

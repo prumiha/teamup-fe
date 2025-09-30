@@ -19,10 +19,6 @@ export const SettingsPage = () => {
 
     return (
         <Box sx={{p: 4, maxWidth: 600, mx: "auto"}}>
-            <Typography variant="h4" gutterBottom>
-                {t('Settings')}
-            </Typography>
-
             <ThemeSelector/>
             <LanguageSelector/>
 

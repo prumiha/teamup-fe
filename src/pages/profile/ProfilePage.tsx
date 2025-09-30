@@ -1,35 +1,37 @@
 import {useTranslation} from "react-i18next";
-import {useStyle} from "../../providers/StyleProvider";
-import {useLanguage} from "../../providers/LanguageProvider";
-import {Box, Button, Typography} from "@mui/material";
-import {ThemeSelector} from "../settings/ThemeSelector";
-import {LanguageSelector} from "../settings/LanguageSelector";
-import React from "react";
+import {Box, Card, CardContent, CardHeader, Collapse, IconButton} from "@mui/material";
+import React, {useState} from "react";
+import {SettingsPage} from "../settings/SettingsPage";
+import {ExpandLess, ExpandMore} from "@mui/icons-material";
+import EditProfile from "./EditProfile";
 
 export const ProfilePage = () => {
     const {t} = useTranslation();
-    const { resetTheme } = useStyle();
-    const { resetLanguage } = useLanguage();
 
-    const resetSettingsToDefaults = () => {
-        resetTheme();
-        resetLanguage();
-    }
+    const [expandSettings, setExpandSettings] = useState(true);
+
+    const handleToggle = () => {
+        setExpandSettings(prev => !prev);
+    };
 
     return (
-        <Box sx={{p: 4, maxWidth: 600, mx: "auto"}}>
-            <Typography variant="h4" gutterBottom>
-                {t('Settings')}
-            </Typography>
-
-            <ThemeSelector/>
-            <LanguageSelector/>
-
-            <Box sx={{mt: 4}}>
-                <Button variant="outlined" onClick={resetSettingsToDefaults}>
-                    {t('Reset to Defaults')}
-                </Button>
-            </Box>
+        <Box sx={{ p: 2, maxWidth: 600, mx: "auto" }}>
+            <EditProfile />
+            <Card sx={{ maxWidth: 600, margin: "auto", mt: 4 }}>
+                <CardHeader
+                    title={t("Settings")}
+                    action={
+                        <IconButton onClick={handleToggle}>
+                            {expandSettings ? <ExpandLess /> : <ExpandMore />}
+                        </IconButton>
+                    }
+                />
+                <Collapse in={expandSettings} timeout="auto" unmountOnExit>
+                    <CardContent sx={{ p: 0 }}>
+                        <SettingsPage />
+                    </CardContent>
+                </Collapse>
+            </Card>
         </Box>
     );
 };
