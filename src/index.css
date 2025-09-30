@@ -16,3 +16,19 @@ html, body, #root {
     margin: 0;
     padding: 0;
 }
+
+/* Hide scrollbars globally but keep scrolling enabled */
+html, body {
+    overflow: auto;             /* allow scroll */
+}
+
+/* Hide scrollbars for any scrollable elements (just in case) */
+* {
+    -ms-overflow-style: none;   /* IE and Edge */
+    scrollbar-width: none;      /* Firefox */
+}
+*::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;              /* Chrome, Safari, Opera */
+}
