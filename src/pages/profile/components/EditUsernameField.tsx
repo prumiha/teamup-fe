@@ -13,7 +13,7 @@ const USERNAME_PATTERN = /^[a-zA-Z0-9._-]+$/;
 const USERNAME_MAX_LENGTH = 20;
 const USERNAME_MIN_LENGTH = 3;
 
-const UsernameField = ({ value, onChange, onValidChange, autoFocus }: UsernameFieldProps) => {
+const EditUsernameField = ({ value, onChange, onValidChange, autoFocus }: UsernameFieldProps) => {
   const { t } = useTranslation();
   const [error, setError] = useState<string | undefined>();
 
@@ -42,9 +42,10 @@ const UsernameField = ({ value, onChange, onValidChange, autoFocus }: UsernameFi
       helperText={error}
       required
       autoFocus={autoFocus}
+      size={"small"}
       fullWidth
     />
   );
 };
 
-export default UsernameField;
+export default EditUsernameField;

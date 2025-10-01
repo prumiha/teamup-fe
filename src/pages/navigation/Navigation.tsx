@@ -10,7 +10,9 @@ import {useTranslation} from 'react-i18next';
 
 export enum NavigationPaths {
     HOME = '/',
+    LOGIN = '/login',
     PROFILE = '/profile',
+    EDIT_PROFILE = '/profile/edit',
     SETTINGS = '/settings',
 }
 

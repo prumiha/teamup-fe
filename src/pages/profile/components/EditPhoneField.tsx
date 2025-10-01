@@ -11,7 +11,7 @@ export type PhoneFieldProps = {
 const PHONE_PATTERN = /^[0-9+\- ]+$/;
 const PHONE_MAX_LENGTH = 20;
 
-const PhoneField: React.FC<PhoneFieldProps> = ({ value, onChange, onValidChange }) => {
+const EditPhoneField: React.FC<PhoneFieldProps> = ({ value, onChange, onValidChange }) => {
   const { t } = useTranslation();
   const [error, setError] = useState<string | undefined>();
 
@@ -38,8 +38,9 @@ const PhoneField: React.FC<PhoneFieldProps> = ({ value, onChange, onValidChange 
       error={!!error}
       helperText={error}
       fullWidth
+      size={"small"}
     />
   );
 };
 
-export default PhoneField;
+export default EditPhoneField;

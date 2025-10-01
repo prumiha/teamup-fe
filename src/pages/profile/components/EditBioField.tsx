@@ -11,7 +11,7 @@ export type BioFieldProps = {
 
 const BIO_MAX_LENGTH = 500;
 
-const BioField: React.FC<BioFieldProps> = ({ value, onChange, onValidChange }) => {
+const EditBioField: React.FC<BioFieldProps> = ({ value, onChange, onValidChange }) => {
   const { t } = useTranslation();
   const [error, setError] = useState<string | undefined>();
   const count = value?.length ?? 0;
@@ -41,8 +41,9 @@ const BioField: React.FC<BioFieldProps> = ({ value, onChange, onValidChange }) =
       multiline
       minRows={4}
       fullWidth
+      size={"small"}
     />
   );
 };
 
-export default BioField;
+export default EditBioField;

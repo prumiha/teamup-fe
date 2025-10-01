@@ -9,6 +9,7 @@ import {LanguageProvider} from "./providers/LanguageProvider";
 import {AuthProvider, Role} from "./providers/AuthProvider";
 import {ApiProvider} from "./pages/settings/ApiProvider";
 import {ProfilePage} from "./pages/profile/ProfilePage";
+import {LoginPage} from "./pages/authentication/login/LoginPage";
 
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
                                 <Navigation/>
                                 <Routes>
                                     {/* Public routes */}
+                                    <Route path={NavigationPaths.LOGIN} element={<LoginPage />}/>
                                     <Route path={NavigationPaths.HOME} element={<ProfilePage/>}/>
                                     <Route path={NavigationPaths.SETTINGS} element={<SettingsPage/>}/>
 

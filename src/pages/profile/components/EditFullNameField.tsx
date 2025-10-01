@@ -11,7 +11,7 @@ export type FullNameFieldProps = {
 const FULL_NAME_PATTERN = /^[a-zA-Z0-9._\- ]+$/;
 const FULL_NAME_MAX_LENGTH = 50;
 
-const FullNameField = ({ value, onChange, onValidChange }: FullNameFieldProps) => {
+const EditFullNameField = ({ value, onChange, onValidChange }: FullNameFieldProps) => {
   const { t } = useTranslation();
   const [error, setError] = useState<string | undefined>();
 
@@ -38,8 +38,9 @@ const FullNameField = ({ value, onChange, onValidChange }: FullNameFieldProps) =
       error={!!error}
       helperText={error}
       fullWidth
+      size={"small"}
     />
   );
 };
 
-export default FullNameField;
+export default EditFullNameField;

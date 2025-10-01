@@ -1,38 +1,62 @@
 import React, {createContext, ReactNode, useCallback, useContext} from "react";
-import {useAuth, User} from "../../providers/AuthProvider";
+import {Role, useAuth, User} from "../../providers/AuthProvider";
 import axios, {AxiosHeaders, AxiosInstance, InternalAxiosRequestConfig} from "axios";
 
-type LoginRequest = {
+export type LoginRequest = {
     username: string;
     password: string;
 };
 
-type RegisterRequest = {
+export type RegisterRequest = {
     username: string;
     password: string;
     email?: string;
     phone?: string;
 };
 
-type LoginResponse = {
+export type LoginResponse = {
+    id: number;
+    username: string;
+    roles: Role[];
+
+    token: string;
+    tokenExpiration: string;
+};
+
+export type RegisterResponse = {
     token: string;
     tokenExpiration: number;
     user: User;
 };
 
-type RegisterResponse = {
-    token: string;
-    tokenExpiration: number;
-    user: User;
+export type UserProfilePersonalResponse = {
+    // from user
+    id: number;
+    username: string;
+    fullName: string;
+    email: string;
+    phone: string;
+
+    // from user profile
+    bio: string;
+    avatarUrl: string;
+
+    // from user stats
+    activitiesLocked: number;
+    activitiesLateUnlocks: number;
+    activitiesAttended: number;
+    activitiesNoShows: number;
+    activitiesOrganized: number;
+    activitiesCancelled: number;
+    rating: number;
 };
 
 type ApiContextType = {
-    callLoginApi: (email: string, password: string) => Promise<LoginResponse>;
-    callRegisterApi: (
-        email: string,
-        password: string
-    ) => Promise<RegisterResponse>;
+    callLoginEndpoint: (loginRequest: LoginRequest) => Promise<LoginResponse>;
+    callRegisterEndpoint: (email: string, password: string) => Promise<RegisterResponse>;
+    callPersonalProfileEndpoint: () => Promise<UserProfilePersonalResponse>;
 };
+
 
 const ApiContext = createContext<ApiContextType | undefined>(undefined);
 
@@ -42,14 +66,14 @@ export const useApi = (): ApiContextType => {
     return context;
 };
 
-const isTokenValid = (token: string | null, expiration: number | null): boolean => {
+const isTokenValid = (token: string | null, expiration: Date | null): boolean => {
     if (!token || !expiration) return false;
-    const now = Date.now();
-    return expiration > now;
+    console.log(token, expiration.getMilliseconds());
+    return expiration.getTime() > Date.now();
 };
 
 export const ApiProvider = ({children}: { children: ReactNode }) => {
-    const { login, token, tokenExpiration } = useAuth();
+    const { token, tokenExpiration } = useAuth();
     const baseUrl = "http://localhost:8080";
     const api: AxiosInstance = useCallback(() => {
         const instance = axios.create({
@@ -80,36 +104,47 @@ export const ApiProvider = ({children}: { children: ReactNode }) => {
         return instance;
     }, [token, tokenExpiration])();
 
-    const callLoginApi = useCallback(
-        async (email: string, password: string): Promise<LoginResponse> => {
-            const payload: LoginRequest = {username: email, password};
+    const callLoginEndpoint = useCallback(
+        async (loginRequest: LoginRequest): Promise<LoginResponse> => {
             const res = await api.post<LoginResponse>(
                 "/authentication/login",
-                payload
+                loginRequest
             );
-            const data = res.data;
-            login(data.user, data.token, data.tokenExpiration);
-            return data;
+            return res.data;
         },
-        [api, login]
+        [api]
     );
 
-    const callRegisterApi = useCallback(
+    const callRegisterEndpoint = useCallback(
         async (email: string, password: string): Promise<RegisterResponse> => {
             const payload: RegisterRequest = {username: email, password, email};
             const res = await api.post<RegisterResponse>(
                 "/authentication/register",
                 payload
             );
-            const data = res.data;
-            login(data.user, data.token, data.tokenExpiration);
-            return data;
+            return res.data;
         },
-        [api, login]
+        [api]
+    );
+
+    const callPersonalProfileEndpoint = useCallback(
+        async (): Promise<any> => {
+
+            const res = await api.get<UserProfilePersonalResponse>(
+                "/user/profile"
+            );
+            console.log(res);
+            return res.data;
+        },
+        [api]
     );
 
     return (
-        <ApiContext.Provider value={{callLoginApi, callRegisterApi}}>
+        <ApiContext.Provider value={{
+            callLoginEndpoint,
+            callRegisterEndpoint,
+            callPersonalProfileEndpoint
+        }}>
             {children}
         </ApiContext.Provider>
     );

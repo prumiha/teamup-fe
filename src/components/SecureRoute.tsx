@@ -1,4 +1,4 @@
-import {Navigate} from 'react-router-dom';
+import {Navigate, useLocation} from 'react-router-dom';
 
 import React, {ReactNode} from "react";
 import {AlertType, useAlert} from "../providers/AlertProvider";
@@ -14,6 +14,8 @@ export const SecureRoute: React.FC<SecureRouteProps> = ({children, requiredRoles
     const {user} = useAuth();
     const alert = useAlert();
     const {t} = useTranslation();
+    const location = useLocation();
+
     const userRoles = user.roles;
     const missingRoles = requiredRoles.filter(role => !userRoles.includes(role));
 
@@ -25,7 +27,7 @@ export const SecureRoute: React.FC<SecureRouteProps> = ({children, requiredRoles
     switch (firstMissing) {
         case Role.USER:
             alert.showAlert(t("Sign in to access this page"), AlertType.WARNING, 4000);
-            return <Navigate to="/login" replace/>;
+            return <Navigate to="/login" state={{ from: location }} replace/>;
         case Role.ADMIN:
             alert.showAlert(
                 t("You are trying to access a page you should not be accessing"),

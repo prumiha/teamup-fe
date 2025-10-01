@@ -42,14 +42,19 @@ i18n.use(initReactI18next).init({
                 "Paste": "Paste",
                 "Web Clipboard": "Web Clipboard",
                 "Test message": "Test message",
-                // EditProfile
+                // EditProfilePage
                 "Edit Profile": "Edit Profile",
                 "Update your personal information": "Update your personal information",
                 "Upload": "Upload",
+                "Remove": "Remove",
+                "Change": "Change",
                 "Remove avatar": "Remove avatar",
                 "Cancel": "Cancel",
                 "Save": "Save",
                 "Username": "Username",
+                "Password": "Password",
+                "Authentication failed.": "Authentication failed.",
+                "Please enter valid username and password": "Please enter valid username and password",
                 "Full name": "Full name",
                 "Email": "Email",
                 "Phone": "Phone",
@@ -64,7 +69,8 @@ i18n.use(initReactI18next).init({
                 "Enter a valid email": "Enter a valid email",
                 "Phone must be at most 20 characters": "Phone must be at most 20 characters",
                 "Phone can contain digits, +, -, and spaces only": "Phone can contain digits, +, -, and spaces only",
-                "Bio must be at most 500 characters": "Bio must be at most 500 characters"
+                "Bio must be at most 500 characters": "Bio must be at most 500 characters",
+                "Failed to load profile": "Failed to load profile"
             }},
         hr: {translation: {
                 "Login": "Prijava",
@@ -90,14 +96,19 @@ i18n.use(initReactI18next).init({
                 "Paste": "Zalijepi",
                 "Web Clipboard": "Web međuspremnik",
                 "Test message": "Test poruka",
-                // EditProfile
+                // EditProfilePage
                 "Edit Profile": "Uredi profil",
                 "Update your personal information": "Ažurirajte svoje osobne podatke",
                 "Upload": "Učitaj",
+                "Remove": "Ukloni",
+                "Change": "Promijeni",
                 "Remove avatar": "Ukloni avatar",
                 "Cancel": "Odustani",
                 "Save": "Spremi",
                 "Username": "Korisničko ime",
+                "Password": "Lozinka",
+                "Authentication failed.": "Autentifikacija nije uspjela.",
+                "Please enter valid username and password": "Unesite valjano korisničko ime i lozinku",
                 "Full name": "Puno ime",
                 "Email": "E-mail",
                 "Phone": "Telefon",
@@ -112,7 +123,8 @@ i18n.use(initReactI18next).init({
                 "Enter a valid email": "Unesite valjanu e-mail adresu",
                 "Phone must be at most 20 characters": "Telefon može imati najviše 20 znakova",
                 "Phone can contain digits, +, -, and spaces only": "Telefon može sadržavati samo znamenke, +, - i razmake",
-                "Bio must be at most 500 characters": "Bio može imati najviše 500 znakova"
+                "Bio must be at most 500 characters": "Bio može imati najviše 500 znakova",
+                "Failed to load profile": "Nije moguće učitati profil",
             }},
     },
     lng: "en",

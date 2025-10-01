@@ -10,8 +10,8 @@ import {Box} from "@mui/material";
 interface AuthContextType {
     user: User;
     token: string | null;
-    tokenExpiration: number | null;
-    login: (userData: User, token: string, tokenExpiration: number) => void;
+    tokenExpiration: Date | null;
+    login: (userData: User, token: string, tokenExpiration: Date) => void;
     logout: () => void;
 }
 
@@ -88,15 +88,15 @@ export const useAuth = (): AuthContextType => {
 export const AuthProvider = ({children}: { children: ReactNode }) => {
     const localStorage = useLocalStorage();
 
-    const storedAuthTokenExpiration = localStorage.get<number>(LOCAL_STORAGE_TOKEN_EXPIRATION_KEY);
+    const storedAuthTokenExpiration = localStorage.get<Date>(LOCAL_STORAGE_TOKEN_EXPIRATION_KEY);
     const storedAuthToken = localStorage.get<string>(LOCAL_STORAGE_TOKEN_KEY);
     const storedUser = loadUserFromLocalStorageOrReturnGuest(localStorage);
 
-    const [tokenExpiration, setTokenExpiration] = useState<number | null>(storedAuthTokenExpiration);
+    const [tokenExpiration, setTokenExpiration] = useState<Date | null>(storedAuthTokenExpiration);
     const [token, setToken] = useState<string | null>(storedAuthToken);
     const [user, setUserState] = useState<User>(storedUser);
 
-    const login = (u: User, t: string, e: number) => {
+    const login = (u: User, t: string, e: Date) => {
         setUserState(u);
         setToken(t);
         setTokenExpiration(e);

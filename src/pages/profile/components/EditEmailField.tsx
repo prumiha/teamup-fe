@@ -11,7 +11,7 @@ export type EmailFieldProps = {
 const EMAIL_PATTERN = /^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$/;
 const EMAIL_MAX_LENGTH = 40;
 
-const EmailField = ({ value, onChange, onValidChange }: EmailFieldProps) => {
+const EditEmailField = ({ value, onChange, onValidChange }: EmailFieldProps) => {
   const { t } = useTranslation();
   const [error, setError] = useState<string | undefined>();
 
@@ -39,8 +39,9 @@ const EmailField = ({ value, onChange, onValidChange }: EmailFieldProps) => {
       error={!!error}
       helperText={error}
       fullWidth
+      size={"small"}
     />
   );
 };
 
-export default EmailField;
+export default EditEmailField;
