@@ -88,7 +88,8 @@ export const useAuth = (): AuthContextType => {
 export const AuthProvider = ({children}: { children: ReactNode }) => {
     const localStorage = useLocalStorage();
 
-    const storedAuthTokenExpiration = localStorage.get<Date>(LOCAL_STORAGE_TOKEN_EXPIRATION_KEY);
+    const storedAuthTokenExpirationString = localStorage.get<string>(LOCAL_STORAGE_TOKEN_EXPIRATION_KEY);
+    const storedAuthTokenExpiration = storedAuthTokenExpirationString ? new Date(storedAuthTokenExpirationString) : null;
     const storedAuthToken = localStorage.get<string>(LOCAL_STORAGE_TOKEN_KEY);
     const storedUser = loadUserFromLocalStorageOrReturnGuest(localStorage);
 

@@ -84,6 +84,7 @@ export const ApiProvider = ({children}: { children: ReactNode }) => {
         instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
             const authHeader = (): Record<string, string> => {
                 try {
+                    console.log(tokenExpiration?.getTime());
                     if (isTokenValid(token, tokenExpiration)) {
                         return { Authorization: `Bearer ${token}` };
                     }

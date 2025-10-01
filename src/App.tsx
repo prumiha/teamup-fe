@@ -10,6 +10,7 @@ import {AuthProvider, Role} from "./providers/AuthProvider";
 import {ApiProvider} from "./pages/settings/ApiProvider";
 import {ProfilePage} from "./pages/profile/ProfilePage";
 import {LoginPage} from "./pages/authentication/login/LoginPage";
+import {EditProfilePage} from "./pages/profile/EditProfilePage";
 
 
 const App = () => {
@@ -28,8 +29,11 @@ const App = () => {
                                     <Route path={NavigationPaths.SETTINGS} element={<SettingsPage/>}/>
 
                                     {/* Protected routes */}
-                                    <Route path="/profile" element={
+                                    <Route path={NavigationPaths.PROFILE} element={
                                         <SecureRoute children={<ProfilePage/>} requiredRoles={[Role.USER]}/>
+                                    }/>
+                                    <Route path={NavigationPaths.EDIT_PROFILE} element={
+                                        <SecureRoute children={<EditProfilePage/>} requiredRoles={[Role.USER]}/>
                                     }/>
                                 </Routes>
                             </BrowserRouter>
